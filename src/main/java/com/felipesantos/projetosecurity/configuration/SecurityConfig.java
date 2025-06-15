@@ -62,7 +62,9 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/h2-console/**",
                                         "/auth/login",
-                                        "/user/create"
+                                        "/user/create",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**"
                                 ).permitAll()
                                 .requestMatchers(
                                         "/user"
