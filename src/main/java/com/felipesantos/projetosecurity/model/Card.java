@@ -15,7 +15,7 @@ public class Card {
     private User user;
     private String type;
     private String description;
-    private String urlImage;
+    private String local;
     private boolean status;
     private LocalDate date;
 
@@ -51,12 +51,12 @@ public class Card {
         this.description = description;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public String getLocal() {
+        return local;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public boolean isStatus() {

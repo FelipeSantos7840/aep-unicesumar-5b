@@ -7,7 +7,6 @@ import com.felipesantos.projetosecurity.model.Role;
 import com.felipesantos.projetosecurity.model.User;
 import com.felipesantos.projetosecurity.repository.CardRepository;
 import com.felipesantos.projetosecurity.repository.UserRepository;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -68,7 +67,7 @@ public class CardService {
         if(isRole(currentUser,Role.ADMIN) || currentUser.getId() == entity.getUser().getId()){
             entity.setDescription(dto.getDescription());
             entity.setType(dto.getType());
-            entity.setUrlImage(dto.getUrlImage());
+            entity.setLocal(dto.getLocal());
         }
 
         cardRepository.save(entity);
