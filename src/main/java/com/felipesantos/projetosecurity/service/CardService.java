@@ -79,8 +79,9 @@ public class CardService {
         Card entity = validateOptional(cardRepository.findById(id));
         if(isRole(currentUser,Role.ADMIN) || currentUser.getId() == entity.getUser().getId()) {
             cardRepository.deleteById(entity.getId());
+        } else {
+            throw new InvalidParameterException("User without permission to delete this card");
         }
-        throw new InvalidParameterException("User without permission to delete this card");
     }
 
     private User getAuthenticatedUser() {
