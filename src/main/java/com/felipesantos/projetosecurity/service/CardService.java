@@ -35,7 +35,9 @@ public class CardService {
             return cardMapper.toCardDTOList(cards);
         }
 
-        return cardMapper.toCardDTOList(cards.stream().filter(Card::isStatus).toList());
+        return cardMapper.toCardDTOList(cards.stream().filter(
+                card -> card.isStatus() || currentUser.getId() == card.getUser().getId()
+        ).toList());
     }
 
     public CardDTO findById(Long id){
@@ -48,7 +50,6 @@ public class CardService {
         if (isRole(currentUser,Role.USER)){
             dto.setStatus(false);
         }
-
         Card entity = cardMapper.toCard(dto);
         entity.setUser(currentUser);
         cardRepository.save(entity);

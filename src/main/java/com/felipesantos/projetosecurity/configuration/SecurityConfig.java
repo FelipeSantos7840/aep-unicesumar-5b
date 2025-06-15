@@ -70,7 +70,9 @@ public class SecurityConfig {
                                         "/user"
                                 ).hasRole("ADMIN")
                                 .requestMatchers(
-                                        "/user/**"
+                                        "/user/**",
+                                        "/card",
+                                        "/card/**"
                                 ).hasAnyRole("ADMIN","USER")
                                 .anyRequest()
                                 .denyAll()
