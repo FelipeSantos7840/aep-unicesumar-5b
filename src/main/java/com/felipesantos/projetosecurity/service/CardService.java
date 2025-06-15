@@ -7,11 +7,13 @@ import com.felipesantos.projetosecurity.model.Role;
 import com.felipesantos.projetosecurity.model.User;
 import com.felipesantos.projetosecurity.repository.CardRepository;
 import com.felipesantos.projetosecurity.repository.UserRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import static com.felipesantos.projetosecurity.service.util.ValidateEntityService.validateOptional;
@@ -70,6 +72,15 @@ public class CardService {
 
         cardRepository.save(entity);
         return cardMapper.toCardDTO(entity);
+    }
+
+    public void delete(Long id){
+        User currentUser = getAuthenticatedUser();
+        Card entity = validateOptional(cardRepository.findById(id));
+        if(isRole(currentUser,Role.ADMIN) || currentUser.getId() == entity.getUser().getId()) {
+            cardRepository.deleteById(entity.getId());
+        }
+        throw new InvalidParameterException("User without permission to delete this card");
     }
 
     private User getAuthenticatedUser() {
