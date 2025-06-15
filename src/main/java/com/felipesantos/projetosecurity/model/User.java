@@ -20,6 +20,9 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private List<Card> cards;
 
     public User() {
     }
@@ -69,5 +72,22 @@ public class User implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public void addCard(Card card){
+        this.cards.add(card);
+        card.setUser(this);
+    }
+
+    public void removeCard(Card card){
+        this.cards.remove(card);
     }
 }

@@ -10,6 +10,7 @@ public class CardDTO implements Serializable {
     private String type;
     private String description;
     private String url_image;
+    private boolean status;
 
     public CardDTO() {
     }
@@ -52,5 +53,13 @@ public class CardDTO implements Serializable {
 
     public void setUrl_image(String url_image) {
         this.url_image = url_image;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
