@@ -26,7 +26,14 @@ public class CardService {
     CardMapper cardMapper;
 
     public List<CardDTO> findAll(){
-        return cardMapper.toCardDTOList(cardRepository.findAll());
+        User currentUser = getAuthenticatedUser();
+        List<Card> cards = cardRepository.findAll();
+
+        if (isRole(currentUser,Role.ADMIN)) {
+            return cardMapper.toCardDTOList(cards);
+        }
+
+        return cardMapper.toCardDTOList(cards.stream().filter(Card::isStatus).toList());
     }
 
     public CardDTO findById(Long id){
@@ -40,8 +47,29 @@ public class CardService {
             dto.setStatus(false);
         }
 
+        Card entity = cardMapper.toCard(dto);
+        entity.setUser(currentUser);
+        cardRepository.save(entity);
 
+        return cardMapper.toCardDTO(entity);
+    }
 
+    public CardDTO update(Long id, CardDTO dto){
+        User currentUser = getAuthenticatedUser();
+        Card entity = validateOptional(cardRepository.findById(id));
+
+        if (isRole(currentUser,Role.ADMIN)){
+            entity.setStatus(dto.isStatus());
+        }
+
+        if(isRole(currentUser,Role.ADMIN) || currentUser.getId() == entity.getUser().getId()){
+            entity.setDescription(dto.getDescription());
+            entity.setType(dto.getType());
+            entity.setUrlImage(dto.getUrlImage());
+        }
+
+        cardRepository.save(entity);
+        return cardMapper.toCardDTO(entity);
     }
 
     private User getAuthenticatedUser() {

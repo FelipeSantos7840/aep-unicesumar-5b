@@ -2,6 +2,8 @@ package com.felipesantos.projetosecurity.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "card")
 public class Card {
@@ -13,8 +15,9 @@ public class Card {
     private User user;
     private String type;
     private String description;
-    private String url_image;
+    private String urlImage;
     private boolean status;
+    private LocalDate date;
 
     public Long getId() {
         return id;
@@ -48,12 +51,12 @@ public class Card {
         this.description = description;
     }
 
-    public String getUrl_image() {
-        return url_image;
+    public String getUrlImage() {
+        return urlImage;
     }
 
-    public void setUrl_image(String url_image) {
-        this.url_image = url_image;
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 
     public boolean isStatus() {
@@ -62,5 +65,13 @@ public class Card {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
